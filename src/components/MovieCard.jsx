@@ -10,7 +10,7 @@ export default function MovieCard({ movieObj }) {
     const navigate = useNavigate();
     const handleclick = (title) =>{
         const url = `/movies/${encodeURIComponent(title)}`
-        alert(`cilcked, ${movieObj.Title}`)
+        // alert(`cilcked, ${movieObj.Title}`)
         navigate(url)
         
     }

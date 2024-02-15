@@ -2,6 +2,10 @@ import React, { useEffect } from "react";
 import { useReducer, useDispatch, useSelector } from "react-redux";
 import { fetchmovies } from "../redux/movieSlice";
 import MovieCard from "./MovieCard";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
 
 const Listing = () => {
   const dispatch = useDispatch();
@@ -13,9 +17,25 @@ const Listing = () => {
 
   if (movieList.isLoading) {
     return (
-      <div>
-        <p>Loading...!</p>
-      </div>
+      <>
+        <div>
+          <Card sx={{ maxWidth: 300, height: "300px" }}>
+            <CardContent>
+              <img src="" alt="" />
+              <Typography gutterBottom variant="h6">
+                Loading...
+              </Typography>
+              <Typography gutterBottom variant="h6">
+                Loading...
+              </Typography>
+              <Typography gutterBottom variant="h6">
+                Loading...
+              </Typography>
+            </CardContent>
+          </Card>
+          ;
+        </div>
+      </>
     );
   }
 

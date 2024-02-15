@@ -7,6 +7,7 @@ import { store } from "./redux/store";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Seatbooking from "./components/Seatbooking";
 import Landing from "./pages/Landing";
+import MovieBooking from "./pages/MovieBooking";
 
 const routes = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const routes = createBrowserRouter([
   },
   {
     path: "/movies/:id",
-    element: <Seatbooking />,
+    element: <MovieBooking />,
   },
 ]);
 
