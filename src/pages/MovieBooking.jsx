@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 import Seatbooking from "../components/Seatbooking";
 import "./movies.css";
+import { useNavigate } from "react-router-dom";
 
 const MovieBooking = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
-  const [seats, setSeats] = useState(""); 
+  const [seats, setSeats] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Ensuring that the user details are updated before storing them in localStorage
-    const userDetails = {
-      name: name,
-      number: number,
-      seats: seats
-    };
+    // Ensure all fields are filled
+    if (name.trim() && number.trim() && seats.trim()) {
+      const userDetails = {
+        name: name,
+        number: number,
+        seats: seats,
+      };
 
-    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+      localStorage.setItem("userDetails", JSON.stringify(userDetails));
+      alert("UserDetails Saved successfully!")
+      // Navigate to /seats
+      navigate("/seats");
+    } else {
+      alert("Please fill in all fields.");
+    }
   };
 
   const handleSeatChange = (e) => {
-    setSeats(e.target.value); 
+    setSeats(e.target.value);
   };
 
   const isAnyFieldEmpty = () => {
@@ -31,13 +39,9 @@ const MovieBooking = () => {
   return (
     <div className="movie-cont">
       <div>
-        <h1>Movie Details</h1>
+        <h1>Please Fill this form</h1>
       </div>
       <div className="second">
-        <div className="seat">
-          {/* Pass the userDetails state to the Seatbooking component */}
-          <Seatbooking userDetails={{ name, number, seats }} />
-        </div>
         <div className="info">
           <div>
             <h3>Booking Form</h3>
@@ -71,8 +75,10 @@ const MovieBooking = () => {
                 <option value="7">7</option>
                 <option value="8">8</option>
               </select>
-              <button 
-                className={`user-submit-btn ${isAnyFieldEmpty() ? 'disabled-btn' : ''}`} 
+              <button
+                className={`user-submit-btn ${
+                  isAnyFieldEmpty() ? "disabled-btn" : ""
+                }`}
                 disabled={isAnyFieldEmpty()}
               >
                 Submit

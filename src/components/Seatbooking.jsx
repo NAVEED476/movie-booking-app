@@ -66,6 +66,7 @@ const Seatbooking = () => {
   };
 
   const handleSubmited = () => {
+    alert("seat booking successful")
     const updatedSelectedSeats = [...selectedSeats, ...seatState.seatReserved];
     localStorage.setItem("selectedSeats", JSON.stringify(updatedSelectedSeats));
     setSelectedSeats(updatedSelectedSeats);
@@ -105,7 +106,10 @@ const Seatbooking = () => {
 
 const DrawGrid = ({ seat, selected, reserved, checktrue, onClickData, handleSubmited, userDetailsAvailable }) => {
   return (
+    <>
+    <h2>Seat Information</h2>
     <Grid container>
+      
       <Grid item xs={10}>
         <h2 />
         <Col xs={17}>
@@ -140,8 +144,29 @@ const DrawGrid = ({ seat, selected, reserved, checktrue, onClickData, handleSubm
           </button>
         </Col>
       </Grid>
+      <div className="booking-info">
+            <div className="flex-cont">
+              <div className="info-box info-box-size">
+                <h4>15</h4>
+              </div>
+              <h3>Reserved</h3>
+            </div>
+            <div className="flex-cont">
+              <div className="av-info-box info-box-size">
+                <h4>19</h4>
+              </div>
+              <h3>Available</h3>
+            </div>
+            <div className="flex-cont">
+              <div className="selected-info-box info-box-size">
+                <h4>4</h4>
+              </div>
+              <h3>Selected</h3>
+            </div>
+          </div>
     </Grid>
-  );
+    
+ </> );
 };
 
 export default Seatbooking;

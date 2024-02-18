@@ -5,9 +5,6 @@ import Listing from '../components/Listing'
 const Landing = () => {
   const [movies,setMovies] = useState([])
 
-
-
-
   return (
     <div>
       <Navbar/>
