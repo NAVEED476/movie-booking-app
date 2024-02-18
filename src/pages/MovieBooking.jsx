@@ -1,4 +1,4 @@
-import React, { useDebugValue, useState } from "react";
+import React, { useState } from "react";
 import Seatbooking from "../components/Seatbooking";
 import "./movies.css";
 
@@ -7,16 +7,17 @@ const MovieBooking = () => {
   const [number, setNumber] = useState("");
   const [seats, setSeats] = useState(""); 
 
-  let userDetails = {
-    name:name,
-    number:number,
-    seats:seats
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem("userDetails", JSON.stringify(userDetails));
     
+    // Ensuring that the user details are updated before storing them in localStorage
+    const userDetails = {
+      name: name,
+      number: number,
+      seats: seats
+    };
+
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
   };
 
   const handleSeatChange = (e) => {
@@ -34,7 +35,8 @@ const MovieBooking = () => {
       </div>
       <div className="second">
         <div className="seat">
-          <Seatbooking userDetails={userDetails} />
+          {/* Pass the userDetails state to the Seatbooking component */}
+          <Seatbooking userDetails={{ name, number, seats }} />
         </div>
         <div className="info">
           <div>
@@ -80,7 +82,6 @@ const MovieBooking = () => {
           <div className="booking-info">
             <div className="flex-cont">
               <div className="info-box info-box-size">
-                {" "}
                 <h4>15</h4>
               </div>
               <h3>Reserved</h3>

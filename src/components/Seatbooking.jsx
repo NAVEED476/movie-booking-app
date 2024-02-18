@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./seats.css";
 import Grid from '@mui/material/Grid';
 import Col from "react-bootstrap/Col";
 import post from "./post.json";
 
 const Seatbooking = () => {
+  const [userDetails, setUserDetails] = useState(null); 
+  const [loading, setLoading] = useState(true);
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  useEffect(()=>{
+    const fetchUserDetails = async () => {
+      const user = localStorage.getItem("userDetails");
+      setUserDetails(user ? JSON.parse(user) : null);
+      setLoading(false);
+    };
+
+    fetchUserDetails();
+
+    const selectedSeatsData = localStorage.getItem("selectedSeats");
+    if (selectedSeatsData) {
+      setSelectedSeats(JSON.parse(selectedSeatsData));
+    }
+  }, []);
+
   const [seatState, setSeatState] = useState({
     seat: [
       "A1", "A2", "A3", "A4", "A5", "A6", "A7",
@@ -47,6 +66,10 @@ const Seatbooking = () => {
   };
 
   const handleSubmited = () => {
+    const updatedSelectedSeats = [...selectedSeats, ...seatState.seatReserved];
+    localStorage.setItem("selectedSeats", JSON.stringify(updatedSelectedSeats));
+    setSelectedSeats(updatedSelectedSeats);
+
     setSeatState({
       ...seatState,
       seatSelected: seatState.seatSelected.concat(seatState.seatReserved),
@@ -54,13 +77,16 @@ const Seatbooking = () => {
     });
   };
 
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
+
   return (
     <div style={{
       display:"flex",
       alignContent:"center",
       justifyContent:"center",
       flexDirection:"column"
-      
     }}>
       <div className="screen"></div>
       <DrawGrid
@@ -71,15 +97,15 @@ const Seatbooking = () => {
         onClickData={onClickData}
         checktrue={checktrue}
         handleSubmited={handleSubmited}
+        userDetailsAvailable={userDetails && userDetails.name && userDetails.number && userDetails.seats}
       />
     </div>
   );
 };
 
-const DrawGrid = ({ seat, selected, reserved, checktrue, onClickData, handleSubmited }) => {
-  return (<>
+const DrawGrid = ({ seat, selected, reserved, checktrue, onClickData, handleSubmited, userDetailsAvailable }) => {
+  return (
     <Grid container>
-      
       <Grid item xs={10}>
         <h2 />
         <Col xs={17}>
@@ -105,16 +131,16 @@ const DrawGrid = ({ seat, selected, reserved, checktrue, onClickData, handleSubm
             </tbody>
           </table>
           <button
+            disabled={!userDetailsAvailable || reserved.length === 0}
             type="button"
-            className="btn-success btnmargin confirm-btn"
-            onClick={handleSubmited}
+            className={`btn-success btnmargin confirm-btn ${(!userDetailsAvailable || reserved.length === 0) ? 'disabled-btn' : ''}`}
+            onClick={handleSubmited} 
           >
             Confirm Booking
           </button>
         </Col>
       </Grid>
     </Grid>
-    </>
   );
 };
 
