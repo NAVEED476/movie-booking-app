@@ -54,7 +54,7 @@ const MovieBooking = () => {
                 onChange={(e) => setName(e.target.value)}
               />
               <input
-                type="text"
+                type="number"
                 placeholder="Mobile"
                 className="user-name"
                 value={number}
