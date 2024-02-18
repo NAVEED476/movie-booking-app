@@ -43,20 +43,20 @@
 }
 .user-name {
   width: 50%;
-  height: 30px;
+  height: 40px;
   border-radius: 8px;
   margin: 10px;
 }
 .user-form select {
   width: 51%;
-  height: 35px;
+  height: 45px;
   margin: 10px;
   border-radius: 10px;
   border-width: 2px;
 }
 .user-submit-btn {
   width: 30%;
-  height: 30px;
+  height: 35px;
   margin: 10px;
   margin-left: 8%;
   border-radius: 10px;
@@ -110,4 +110,8 @@
 .selected-info-box {
   background: red;
   border-radius: 8px;
+}
+
+.disabled-btn {
+  background-color: grey;
 }

@@ -1,10 +1,32 @@
-import React from "react";
+import React, { useDebugValue, useState } from "react";
 import Seatbooking from "../components/Seatbooking";
 import "./movies.css";
+
 const MovieBooking = () => {
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
+  const [seats, setSeats] = useState(""); 
+
+  let userDetails = {
+    name:name,
+    number:number,
+    seats:seats
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+    
   };
+
+  const handleSeatChange = (e) => {
+    setSeats(e.target.value); 
+  };
+
+  const isAnyFieldEmpty = () => {
+    return !name.trim() || !number.trim() || !seats.trim();
+  };
+
   return (
     <div className="movie-cont">
       <div>
@@ -12,7 +34,7 @@ const MovieBooking = () => {
       </div>
       <div className="second">
         <div className="seat">
-          <Seatbooking />
+          <Seatbooking userDetails={userDetails} />
         </div>
         <div className="info">
           <div>
@@ -22,27 +44,60 @@ const MovieBooking = () => {
                 type="text"
                 placeholder="user Name"
                 className="user-name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
-              <input type="text" placeholder="Mobile" className="user-name" />
-              <select name="select Seats" id="select">
+              <input
+                type="text"
+                placeholder="Mobile"
+                className="user-name"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+              />
+              <select
+                name="select Seats"
+                id="select"
+                value={seats}
+                onChange={handleSeatChange}
+              >
                 <option value="">Select Number of Seats</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
-                <option value="">6</option>
-                <option value="">7</option>
-                <option value="">8</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
               </select>
-              <button className="user-submit-btn">Submit</button>
+              <button 
+                className={`user-submit-btn ${isAnyFieldEmpty() ? 'disabled-btn' : ''}`} 
+                disabled={isAnyFieldEmpty()}
+              >
+                Submit
+              </button>
             </form>
           </div>
           <div className="booking-info">
-            <div className="flex-cont"><div className="info-box info-box-size"> <h4>15</h4></div><h3>Reserved</h3></div>
-            <div className="flex-cont"><div className="av-info-box info-box-size"><h4>19</h4></div><h3>Availble</h3></div>
-            <div className="flex-cont"><div className="selected-info-box info-box-size"><h4>4</h4></div><h3>Selected</h3></div>
-
-             </div>
+            <div className="flex-cont">
+              <div className="info-box info-box-size">
+                {" "}
+                <h4>15</h4>
+              </div>
+              <h3>Reserved</h3>
+            </div>
+            <div className="flex-cont">
+              <div className="av-info-box info-box-size">
+                <h4>19</h4>
+              </div>
+              <h3>Available</h3>
+            </div>
+            <div className="flex-cont">
+              <div className="selected-info-box info-box-size">
+                <h4>4</h4>
+              </div>
+              <h3>Selected</h3>
+            </div>
+          </div>
         </div>
       </div>
     </div>
